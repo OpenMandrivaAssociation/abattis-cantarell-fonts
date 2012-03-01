@@ -12,9 +12,7 @@ License:	OFL
 URL:		http://abattis.org/cantarell/
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/cantarell-fonts/%{url_ver}/%{oname}-%{version}.tar.xz
 BuildArch:	noarch
-BuildRequires:	fontpackages-devel
 BuildRequires:	fontforge
-Requires:	fontpackages-filesystem
 
 %description
 Cantarell is a set of fonts designed by Dave Crossland. It is a 
@@ -33,18 +31,20 @@ fontforge -lang=ff -c 'Open($1); Generate($2);' src/Cantarell-Regular.sfd Cantar
 
 %install
 rm -rf %{buildroot}
-install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.otf %{buildroot}%{_fontdir}
+install -m 0755 -d %{buildroot}%{_datadir}/fontconfig/conf.avail
+install -m 0755 -d %{buildroot}%{_xfontdir}/%{name}
+install -m 0755 -d %{buildroot}%{_sysconfdir}/fonts/conf.d
 
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
-
+install -m 0644 -p *.otf %{buildroot}%{_xfontdir}/%{name}
 install -Dpm 0644 fontconfig/%{fontconf} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
+        %{buildroot}%{_datadir}/fontconfig/conf.avail
 
-ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+ln -s %{_datadir}/fontconfig/conf.avail/%{fontconf} \
+      %{buildroot}%{_sysconfdir}/fonts/conf.d/%{fontconf}
 
-%_font_pkg -f %{fontconf} *.otf
+%files
 %doc COPYING NEWS README
+%{_sysconfdir}/fonts/conf.d/%{fontconf} 
+%{_datadir}/fontconfig/conf.avail/%{fontconf}
+%{_xfontdir}/%{name}/*.otf
 
