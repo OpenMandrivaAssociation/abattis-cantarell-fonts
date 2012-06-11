@@ -30,7 +30,6 @@ fontforge -lang=ff -c 'Open($1); Generate($2);' src/Cantarell-Bold.sfd Cantarell
 fontforge -lang=ff -c 'Open($1); Generate($2);' src/Cantarell-Regular.sfd Cantarell-Regular.otf
 
 %install
-rm -rf %{buildroot}
 install -m 0755 -d %{buildroot}%{_datadir}/fontconfig/conf.avail
 install -m 0755 -d %{buildroot}%{_xfontdir}/%{name}
 install -m 0755 -d %{buildroot}%{_sysconfdir}/fonts/conf.d
