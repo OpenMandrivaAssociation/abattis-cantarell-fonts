@@ -1,8 +1,6 @@
 %define oname		cantarell-fonts
 %define fontconf	31-cantarell.conf
 
-%define url_ver	%(echo %{version}|cut -d. -f1,2)
-
 Summary:	Cantarell, a Humanist sans-serif font family
 Name:		abattis-%{oname}
 Version:	0.0.8
@@ -10,7 +8,7 @@ Release:	1
 Group:		System/Fonts/True type 
 License:	OFL
 URL:		http://abattis.org/cantarell/
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/cantarell-fonts/%{url_ver}/%{oname}-%{version}.tar.xz
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/cantarell-fonts/%{oname}-%{version}.tar.xz
 BuildArch:	noarch
 BuildRequires:	fontforge
 
