@@ -11,8 +11,6 @@ Group:		System/Fonts/True type
 License:	OFL
 URL:		http://abattis.org/cantarell/
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/cantarell-fonts/%{url_ver}/%{oname}-%{version}.tar.xz
-# Upstream patches
-Patch0:		cantarell-cyrillic-support.patch
 
 BuildArch:	noarch
 BuildRequires:	fontforge
