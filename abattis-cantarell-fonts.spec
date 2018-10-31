@@ -6,7 +6,7 @@
 Summary:	Cantarell, a Humanist sans-serif font family
 Name:		abattis-%{oname}
 Version:	0.0.16
-Release:	2
+Release:	3
 License:	OFL
 Group:		System/Fonts/True type
 Url:		http://abattis.org/cantarell/
