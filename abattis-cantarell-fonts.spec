@@ -1,36 +1,37 @@
-%define oname		cantarell-fonts
-%define fontconf	31-cantarell.conf
+%define oname cantarell-fonts
+%define fontconf 31-cantarell.conf
 
 %define url_ver %(echo %{version}|cut -d. -f1,2)
 
 Summary:	Cantarell, a Humanist sans-serif font family
 Name:		abattis-%{oname}
-Version:	0.0.16
-Release:	3
+Version:	0.201
+Release:	1
 License:	OFL
 Group:		System/Fonts/True type
 Url:		http://abattis.org/cantarell/
 Source0: 	http://ftp.gnome.org/pub/GNOME/sources/cantarell-fonts/%{url_ver}/%{oname}-%{version}.tar.xz
 BuildArch:	noarch
 BuildRequires:	fontforge
+BuildRequires:	meson
 
 %description
 Cantarell is a set of fonts designed by Dave Crossland. It is a 
 sans-serif humanist typeface family.
 
 %prep
-%setup -qn %{oname}-%{version}
+%autosetup -n %{oname}-%{version} -p1
 
 %build
-%configure2_5x
-%make
+%meson
+%meson_build
 
 #create fonts from "source"
 fontforge -lang=ff -c 'Open($1); Generate($2);' src/Cantarell-Bold.sfd Cantarell-Bold.otf
 fontforge -lang=ff -c 'Open($1); Generate($2);' src/Cantarell-Regular.sfd Cantarell-Regular.otf
 
 %install
-rm -rf %{buildroot}
+%meson_install
 install -m 0755 -d %{buildroot}%{_datadir}/fontconfig/conf.avail
 install -m 0755 -d %{buildroot}%{_xfontdir}/%{name}
 install -m 0755 -d %{buildroot}%{_sysconfdir}/fonts/conf.d
