@@ -1,5 +1,3 @@
-%bcond_with prebuilt
-
 %define oname		cantarell-fonts
 %define fontname	cantarell
 %define fontconf	31-cantarell.conf
@@ -19,17 +17,6 @@ BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 BuildRequires:	meson
 BuildRequires:	appstream
-BuildRequires:	python3-afdko
-%if %{without prebuilt}
-BuildRequires:	fontmake
-BuildRequires:	psautohint >= 2.0.0
-BuildRequires:	python3dist(afdko)
-BuildRequires:	python3dist(cattrs)
-BuildRequires:	python3dist(statmake)
-BuildRequires:	python3dist(attrs)
-BuildRequires:	python3dist(skia-pathops)
-BuildRequires:	python3dist(ufolib2)
-%endif
 Requires:	fontpackages-filesystem
 
 %description
@@ -40,7 +27,7 @@ designed for on-screen reading.
 %autosetup -n %{oname}-%{version} -p1
 
 %build
-%meson -Duseprebuilt=%{?with_prebuilt:true}%{?!with_prebuilt:false}
+%meson
 %meson_build
 
 %install
