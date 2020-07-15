@@ -1,51 +1,60 @@
-%define oname cantarell-fonts
-%define fontconf 31-cantarell.conf
+%bcond_with prebuilt
 
-%define url_ver %(echo %{version}|cut -d. -f1,2)
+%define oname		cantarell-fonts
+%define fontname	cantarell
+%define fontconf	31-cantarell.conf
 
-Summary:	Cantarell, a Humanist sans-serif font family
+%define url_ver	%(echo %{version}|cut -d. -f1,2)
+
 Name:		abattis-%{oname}
 Version:	0.201
 Release:	1
-License:	OFL
+Summary:	Humanist sans-serif font family
 Group:		System/Fonts/True type
-Url:		http://abattis.org/cantarell/
-Source0: 	http://ftp.gnome.org/pub/GNOME/sources/cantarell-fonts/%{url_ver}/%{oname}-%{version}.tar.xz
+License:	OFL
+URL:		https://gitlab.gnome.org/GNOME/cantarell-fonts/
+Source0:	https://download.gnome.org/sources/%{oname}/%{url_ver}/%{oname}-%{version}.tar.xz
+Source1:	cantarell-fontconfig.conf
 BuildArch:	noarch
-BuildRequires:	fontforge
+BuildRequires:	fontpackages-devel
 BuildRequires:	meson
+BuildRequires:	appstream
+BuildRequires:	python3-afdko
+%if %{without prebuilt}
+BuildRequires:	fontmake
+BuildRequires:	psautohint >= 2.0.0
+BuildRequires:	python3dist(afdko)
+BuildRequires:	python3dist(cattrs)
+BuildRequires:	python3dist(statmake)
+BuildRequires:	python3dist(attrs)
+BuildRequires:	python3dist(skia-pathops)
+BuildRequires:	python3dist(ufolib2)
+%endif
+Requires:	fontpackages-filesystem
 
 %description
-Cantarell is a set of fonts designed by Dave Crossland. It is a 
-sans-serif humanist typeface family.
+The Cantarell font family is a contemporary Humanist sans serif
+designed for on-screen reading.
 
 %prep
 %autosetup -n %{oname}-%{version} -p1
 
 %build
-%meson
+%meson -Duseprebuilt=%{?with_prebuilt:true}%{?!with_prebuilt:false}
 %meson_build
-
-#create fonts from "source"
-fontforge -lang=ff -c 'Open($1); Generate($2);' src/Cantarell-Bold.sfd Cantarell-Bold.otf
-fontforge -lang=ff -c 'Open($1); Generate($2);' src/Cantarell-Regular.sfd Cantarell-Regular.otf
 
 %install
 %meson_install
-install -m 0755 -d %{buildroot}%{_datadir}/fontconfig/conf.avail
-install -m 0755 -d %{buildroot}%{_xfontdir}/%{name}
-install -m 0755 -d %{buildroot}%{_sysconfdir}/fonts/conf.d
 
-install -m 0644 -p *.otf %{buildroot}%{_xfontdir}/%{name}
-install -Dpm 0644 fontconfig/%{fontconf} \
-        %{buildroot}%{_datadir}/fontconfig/conf.avail
+install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
+                   %{buildroot}%{_fontconfig_confdir}
 
-ln -s %{_datadir}/fontconfig/conf.avail/%{fontconf} \
-      %{buildroot}%{_sysconfdir}/fonts/conf.d/%{fontconf}
+install -m 0644 -p %{SOURCE1} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
+ln -s %{_fontconfig_templatedir}/%{fontconf} \
+      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
-%files
-%doc COPYING NEWS README
-%{_sysconfdir}/fonts/conf.d/%{fontconf} 
-%{_datadir}/fontconfig/conf.avail/%{fontconf}
-%{_xfontdir}/%{name}/*.otf
-
+%_font_pkg -f %{fontconf} *.otf
+%license COPYING
+%doc NEWS README.md
+%{_metainfodir}/org.gnome.cantarell.metainfo.xml
