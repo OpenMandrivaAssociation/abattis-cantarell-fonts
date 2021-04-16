@@ -1,11 +1,11 @@
-%define oname		cantarell-fonts
-%define fontname	cantarell
-%define fontconf	31-cantarell.conf
+%define oname cantarell-fonts
+%define fontname cantarell
+%define fontconf 31-cantarell.conf
 
-%define url_ver	%(echo %{version}|cut -d. -f1,2)
+%define url_ver %(echo %{version}|cut -d. -f1,2)
 
 Name:		abattis-%{oname}
-Version:	0.201
+Version:	0.301
 Release:	1
 Summary:	Humanist sans-serif font family
 Group:		System/Fonts/True type
