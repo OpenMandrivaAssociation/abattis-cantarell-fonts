@@ -5,7 +5,7 @@
 %define url_ver %(echo %{version}|cut -d. -f1,2)
 
 Name:		abattis-%{oname}
-Version:	0.301
+Version:	0.303
 Release:	1
 Summary:	Humanist sans-serif font family
 Group:		System/Fonts/True type
