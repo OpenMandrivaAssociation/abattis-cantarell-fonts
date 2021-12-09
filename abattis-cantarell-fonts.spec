@@ -17,6 +17,7 @@ BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 BuildRequires:	meson
 BuildRequires:	appstream
+BuildRequires:  python3dist(psautohint)
 Requires:	fontpackages-filesystem
 
 %description
