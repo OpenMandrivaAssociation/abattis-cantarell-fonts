@@ -18,6 +18,7 @@ BuildRequires:	fontpackages-devel
 BuildRequires:	meson
 BuildRequires:	appstream
 BuildRequires:  python3dist(psautohint)
+BuildRequires:  python3dist(cffsubr)
 Requires:	fontpackages-filesystem
 
 %description
