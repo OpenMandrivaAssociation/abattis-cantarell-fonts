@@ -6,7 +6,7 @@
 
 Name:		abattis-%{oname}
 Version:	0.303
-Release:	1
+Release:	2
 Summary:	Humanist sans-serif font family
 Group:		System/Fonts/True type
 License:	OFL
